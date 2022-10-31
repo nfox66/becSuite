@@ -18,6 +18,7 @@ import os
 import shutil
 import time
 import glob
+import re
 
 
 
@@ -38,6 +39,10 @@ if (loadChoice == 'load'):
     
 if (loadChoice == 'run'):
     repOrderParamChoice = input('What phase would you like to look at? (cyclic or binem)\n')
+    checkOrderParam = re.search("cyclic|binem",repOrderParamChoice)
+    if not checkOrderParam:
+        print('Please choose a valid option.')
+        sys.exit()
     f.write('What phase would you like to look at? (cyclic or binem)\n')
     f.write(repOrderParamChoice+'\n')
     f.write('\n')
@@ -121,11 +126,19 @@ rotAngle = input('Please enter the angle of rotation of the vortex(as a fraction
 f.write('Please enter the angle of rotation of the vortex (as a fraction of pi radians, eg for 4*pi/3 enter 4 followed by a space and then 3).\n')
 f.write(rotAngle+'\n')
 f.write('\n')
+checkRotAngle = re.search("\d+ \d+",rotAngle)
+if not checkRotAngle:
+    print('Please input in the correct format.')
+    sys.exit()
 rotAngle = gst.generateAngle(rotAngle)
 gaugeAngle = input('Please enter the value for the gaauge angle of the vortex. In the same format as that entered for the angle of rotation.\n')
 f.write('Please enter the value for the gauge angle of the vortex (in the same format as that entered for the angle of rotation).\n')
 f.write(gaugeAngle+'\n')
 f.write('\n')
+checkGaugeAngle = re.search("\d+ \d+",gaugeAngle)
+if not checkGaugeAngle:
+    print('Please input in the correct format.')
+    sys.exit()
 gaugeAngle = gst.generateAngle(gaugeAngle)
 
 if (ax != 0 or ay != 0):
